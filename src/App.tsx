@@ -1,25 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import 'materialize-css/dist/css/materialize.min.css'
+import Search from './components/pages/Search'
+import Posts from './components/Posts';
+import PostsState from './context/github/PostState'
+import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom';
+import NotFound from './components/NotFound';
+import PostDetail from './components/pages/PostDetail';
+import About from './components/pages/About';
+import M from "materialize-css"
+import { useEffect } from 'react';
+import NavBarItem from './components/pages/NavBar';
 
-function App() {
+function App() { //https://www.carlrippon.com/fetch-with-async-await-and-typescript/
+  useEffect(() => {
+    M.AutoInit();
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <PostsState>
+      <Router>
+        <nav>
+          {/* <Search/> */}
+          <NavBarItem/>
+        </nav>
+        <section>
+          <Switch>
+            <Route exact path="/" component={Posts} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/post/:id" component={PostDetail} />
+            <Route component={NotFound} />
+          </Switch>
+        </section>
+        </Router>
+      </PostsState>
+    </>    
   );
 }
 
